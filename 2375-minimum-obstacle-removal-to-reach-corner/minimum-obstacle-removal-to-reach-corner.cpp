@@ -20,6 +20,9 @@ public:
             pq.pop();
 
             int x = u / n, y = u % n;
+            if(x==m-1 && y==n-1){
+                return d;
+            }
 
             for (auto& dir : dirs) {
                 int dx = dir[0], dy = dir[1];
@@ -34,12 +37,6 @@ public:
                     }
                 }
             }
-        }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                cout << cost[i][j] << " ";
-            }
-            cout << endl;
         }
         return cost[m - 1][n - 1];
     }
