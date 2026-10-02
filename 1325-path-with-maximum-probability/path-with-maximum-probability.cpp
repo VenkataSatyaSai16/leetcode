@@ -1,17 +1,11 @@
 class Solution {
 public:
-    struct Edge{
-        int src;
-        int dest;
-        double weight;
-    };
-
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& succProb, int start_node, int end_node) {
-
-        vector<Edge> Edges;
+        //i - {{j1,wt} , {j2,wt}}
+        vector<vector<pair<int,double>>> Edges(n);
         for(int i = 0 ; i < succProb.size() ; i++){
-            Edges.push_back({edges[i][0] , edges[i][1] , succProb[i]});
-            Edges.push_back({edges[i][1] , edges[i][0] , succProb[i]});
+            Edges[edges[i][0]].push_back({ edges[i][1] , succProb[i]});
+            Edges[edges[i][1]].push_back({edges[i][0] , succProb[i]});
         }
         vector<double> probs(n,DBL_MIN);
         priority_queue< pair<double,int> , vector<pair<double,int>> > pq;
@@ -28,19 +22,11 @@ public:
                 return prob;
             }
 
-            for(Edge e : Edges){
-                if(e.src==node){
-                    double newProb = prob*e.weight;
-                    if(newProb>probs[e.dest]){
-                        probs[e.dest] = newProb;
-                        pq.push({newProb,e.dest});
-                    }
-                } else if(e.dest==node){
-                    double newProb = prob*e.weight;
-                    if(newProb>probs[e.src]){
-                        probs[e.src] = newProb;
-                        pq.push({newProb,e.src});
-                    }
+            for(auto &e : Edges[node]){
+                double newProb = prob*e.second;
+                if(newProb>probs[e.first]){
+                    probs[e.first] = newProb;
+                    pq.push({newProb,e.first});
                 }
             }
         }
