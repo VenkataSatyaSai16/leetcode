@@ -22,7 +22,7 @@ public:
         int end = left;
         //Array generation
         
-        if(left>-1 && right<n &&  (nums[start]!=target || nums[end]!=target)) return {};
+        if((start>-1 && start<n) && (end>-1 && end<n)&&  (nums[start]!=target || nums[end]!=target)) return {};
 
         vector<int> result;
         for(int i = start ; i <= end ; i++){
