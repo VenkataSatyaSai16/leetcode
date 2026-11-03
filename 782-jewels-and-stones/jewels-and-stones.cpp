@@ -8,7 +8,7 @@ public:
 
         int count = 0;
         for(char ch : stones){
-            if(set.count(ch)==1) count++;
+            if(set.count(ch)) count++;
         }
         return count;
     }
